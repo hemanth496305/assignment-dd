@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: my-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      MONGO_USERNAME: root
+      MONGO_PASSWORD: password
+      MONGO_DB: dd_db
+      MONGO_HOST: mongo
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend-app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
+
