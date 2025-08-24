@@ -4,7 +4,7 @@ pipeline {
     environment {
         BACKEND_IMAGE = 'hemanth496305/be:latest'
         FRONTEND_IMAGE = 'hemanth496305/fe:latest'
-        DEPLOY_DIR = '/home/jenkins/workspace/prod/crud-dd-task-mean-app'
+        DEPLOY_DIR = '/home/jenkins/workspace/test/crud-dd-task-mean-app'
     }
 
     stages {
