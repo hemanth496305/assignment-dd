@@ -1,0 +1,71 @@
+pipeline {
+    agent { label 'dd' }
+
+    environment {
+        BACKEND_IMAGE = 'hemanth496305/be:latest'
+        FRONTEND_IMAGE = 'hemanth496305/fe:latest'
+        DEPLOY_DIR = '/home/dd/workspace/prod/crud-dd-task-mean-app'
+    }
+
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                git branch: 'master', url: 'https://github.com/hemanth496305/assignment-dd.git'
+            }
+        }
+
+        stage('List Directory') {
+            steps {
+                dir('crud-dd-task-mean-app') {
+                    sh 'ls -l'
+                }
+            }
+        }
+
+        stage('Build Backend Docker Image') {
+            steps {
+                dir('crud-dd-task-mean-app/backend') {
+                    sh "docker build -t $BACKEND_IMAGE ."
+                }
+            }
+        }
+
+        stage('Build Frontend Docker Image') {
+            steps {
+                dir('crud-dd-task-mean-app/frontend') {
+                    sh "docker build -t $FRONTEND_IMAGE ."
+                }
+            }
+        }
+
+        stage('Push Images to Docker Hub') {
+            steps {
+                withDockerRegistry([credentialsId: 'dockerhub-credentials', url: '']) {
+                    sh "docker push $BACKEND_IMAGE"
+                    sh "docker push $FRONTEND_IMAGE"
+                }
+            }
+        }
+
+        stage('Deploy to VM') {
+            steps {
+                dir("$DEPLOY_DIR") {
+                    sh '''
+                        docker compose pull
+                        docker compose up -d --remove-orphans
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Deployment successful!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
+____
