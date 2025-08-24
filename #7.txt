@@ -1,0 +1,294 @@
+Started by GitHub push by hemanth496305
+Obtained crud-dd-task-mean-app/Jenkinsfile from git https://github.com/hemanth496305/assignment-dd.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on slave in /home/jenkins/workspace/test
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Fetching changes from the remote Git repository
+Checking out Revision 4ab723584236e935d7eb313763a3eb33e71fdd59 (refs/remotes/origin/master)
+Commit message: "Update README.md"
+ > git rev-parse --resolve-git-dir /home/jenkins/workspace/test/.git # timeout=10
+ > git config remote.origin.url https://github.com/hemanth496305/assignment-dd.git # timeout=10
+Fetching upstream changes from https://github.com/hemanth496305/assignment-dd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/hemanth496305/assignment-dd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 4ab723584236e935d7eb313763a3eb33e71fdd59 # timeout=10
+ > git rev-list --no-walk 765be5b3f462dc3a51c970c79194210eafcaf57d # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout SCM)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Fetching changes from the remote Git repository
+Checking out Revision 4ab723584236e935d7eb313763a3eb33e71fdd59 (refs/remotes/origin/master)
+Commit message: "Update README.md"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (List Directory)
+[Pipeline] dir
+Running in /home/jenkins/workspace/test/crud-dd-task-mean-app
+[Pipeline] {
+[Pipeline] sh
++ ls -l
+total 52
+-rw-rw-r-- 1 jenkins jenkins  1793 Aug 24 07:29 Jenkinsfile
+-rw-rw-r-- 1 jenkins jenkins  2508 Aug 24 07:54 README.md
+drwxrwxr-x 3 jenkins jenkins  4096 Aug 24 07:24 backend
+drwxrwxr-x 2 jenkins jenkins  4096 Aug 24 07:32 backend@tmp
+-rw-rw-r-- 1 jenkins jenkins   832 Aug 24 07:24 docker-compose.yml
+drwxrwxr-x 3 jenkins jenkins  4096 Aug 24 07:24 frontend
+drwxrwxr-x 2 jenkins jenkins  4096 Aug 24 07:32 frontend@tmp
+-rw-rw-r-- 1 jenkins jenkins 20554 Aug 24 07:24 get-docker.sh
+[Pipeline] }
+ > git rev-parse --resolve-git-dir /home/jenkins/workspace/test/.git # timeout=10
+ > git config remote.origin.url https://github.com/hemanth496305/assignment-dd.git # timeout=10
+Fetching upstream changes from https://github.com/hemanth496305/assignment-dd.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/hemanth496305/assignment-dd.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 4ab723584236e935d7eb313763a3eb33e71fdd59 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D master # timeout=10
+ > git checkout -b master 4ab723584236e935d7eb313763a3eb33e71fdd59 # timeout=10
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Backend Docker Image)
+[Pipeline] dir
+Running in /home/jenkins/workspace/test/crud-dd-task-mean-app/backend
+[Pipeline] {
+[Pipeline] sh
++ docker build -t hemanth496305/be:latest .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 174B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20
+#2 DONE 0.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/node:20@sha256:572a90df10a58ebb7d3f223d661d964a6c2383a9c2b5763162b4f631c53dc56a
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 506B done
+#5 DONE 0.0s
+
+#6 [4/5] RUN npm install
+#6 CACHED
+
+#7 [2/5] WORKDIR /app
+#7 CACHED
+
+#8 [3/5] COPY package*.json ./
+#8 CACHED
+
+#9 [5/5] COPY . .
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 writing image sha256:75f4c05da4a6f93939f61f2f0b63e8457ed5a4f34d671573a36c57f7748d190f done
+#10 naming to docker.io/hemanth496305/be:latest 0.0s done
+#10 DONE 0.0s
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Frontend Docker Image)
+[Pipeline] dir
+Running in /home/jenkins/workspace/test/crud-dd-task-mean-app/frontend
+[Pipeline] {
+[Pipeline] sh
++ docker build -t hemanth496305/fe:latest .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 298B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:20
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/nginx:alpine
+#3 DONE 0.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [build 1/6] FROM docker.io/library/node:20@sha256:572a90df10a58ebb7d3f223d661d964a6c2383a9c2b5763162b4f631c53dc56a
+#5 DONE 0.0s
+
+#6 [stage-1 1/2] FROM docker.io/library/nginx:alpine@sha256:42a516af16b852e33b7682d5ef8acbd5d13fe08fecadc7ed98605ba5e3b26ab8
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 2.31kB done
+#7 DONE 0.0s
+
+#8 [build 6/6] RUN npm run build --prod
+#8 CACHED
+
+#9 [build 2/6] WORKDIR /app
+#9 CACHED
+
+#10 [build 3/6] COPY package*.json ./
+#10 CACHED
+
+#11 [build 5/6] COPY . .
+#11 CACHED
+
+#12 [build 4/6] RUN npm install
+#12 CACHED
+
+#13 [stage-1 2/2] COPY --from=build /app/dist/angular-15-crud/* /usr/share/nginx/html
+#13 CACHED
+
+#14 exporting to image
+#14 exporting layers done
+#14 writing image sha256:35335598c74cc8b838c2f647674cd12ce2c015ea96a1512b258acec2a1499a11 0.0s done
+#14 naming to docker.io/hemanth496305/fe:latest 0.0s done
+#14 DONE 0.0s
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push Images to Docker Hub)
+[Pipeline] withDockerRegistry
+$ docker login -u hemanth496305 -p ******** https://index.docker.io/v1/
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+
+WARNING! Your credentials are stored unencrypted in '/home/jenkins/workspace/test@tmp/b016d08f-162b-4515-ad24-a7f6b5f4ddc5/config.json'.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/go/credential-store/
+
+Login Succeeded
+[Pipeline] {
+[Pipeline] sh
++ docker push hemanth496305/be:latest
+The push refers to repository [docker.io/hemanth496305/be]
+da8ecd919e54: Preparing
+232af7d5d93a: Preparing
+2ce5d221db2a: Preparing
+076b8df3739c: Preparing
+63460597559f: Preparing
+d04821c9c5d2: Preparing
+8ae1707cad3d: Preparing
+f4cae176fb11: Preparing
+56bc20dcf91d: Preparing
+746379c6de53: Preparing
+bf4805173473: Preparing
+4668f0f488e5: Preparing
+d04821c9c5d2: Waiting
+8ae1707cad3d: Waiting
+f4cae176fb11: Waiting
+56bc20dcf91d: Waiting
+bf4805173473: Waiting
+746379c6de53: Waiting
+4668f0f488e5: Waiting
+232af7d5d93a: Layer already exists
+63460597559f: Layer already exists
+da8ecd919e54: Layer already exists
+2ce5d221db2a: Layer already exists
+076b8df3739c: Layer already exists
+d04821c9c5d2: Layer already exists
+8ae1707cad3d: Layer already exists
+f4cae176fb11: Layer already exists
+56bc20dcf91d: Layer already exists
+4668f0f488e5: Layer already exists
+bf4805173473: Layer already exists
+746379c6de53: Layer already exists
+latest: digest: sha256:448bf2b511a36e2041fae65839fa502282d96ef2aade087a9433488e002a9acf size: 2837
+[Pipeline] sh
++ docker push hemanth496305/fe:latest
+The push refers to repository [docker.io/hemanth496305/fe]
+7c45d3ba0c12: Preparing
+f9985d3fc94d: Preparing
+d208138be39d: Preparing
+a2b76470e8f1: Preparing
+917b2c97271e: Preparing
+16ca725632e5: Preparing
+7978a9c91f72: Preparing
+b6ff0212304e: Preparing
+418dccb7d85a: Preparing
+16ca725632e5: Waiting
+7978a9c91f72: Waiting
+b6ff0212304e: Waiting
+418dccb7d85a: Waiting
+917b2c97271e: Layer already exists
+a2b76470e8f1: Layer already exists
+d208138be39d: Layer already exists
+f9985d3fc94d: Layer already exists
+7c45d3ba0c12: Layer already exists
+b6ff0212304e: Layer already exists
+7978a9c91f72: Layer already exists
+16ca725632e5: Layer already exists
+418dccb7d85a: Layer already exists
+latest: digest: sha256:5fc2c48da53bd99b3d2e710e96d6f49485b00bae6dc4eb056ddd0282d6320160 size: 2199
+[Pipeline] }
+[Pipeline] // withDockerRegistry
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to VM)
+[Pipeline] dir
+Running in /home/jenkins/workspace/test/crud-dd-task-mean-app
+[Pipeline] {
+[Pipeline] sh
++ docker compose pull
+time="2025-08-24T07:54:51Z" level=warning msg="/home/jenkins/workspace/test/crud-dd-task-mean-app/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ frontend Skipped - No image to be pulled 
+ backend Skipped - No image to be pulled 
+ mongo Pulling 
+ mongo Pulled 
++ docker compose up -d --remove-orphans
+time="2025-08-24T07:54:51Z" level=warning msg="/home/jenkins/workspace/test/crud-dd-task-mean-app/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Container my-mongo  Running
+ Container backend-app  Running
+ Container frontend-app  Running
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+✅ Deployment successful!
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
